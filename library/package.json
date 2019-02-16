@@ -1,0 +1,17 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "package.json here",
+  "main": "app.js",
+  "dependencies": {
+    "cat-me": "^1.0.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harshvardhan Kanthode",
+  "license": "ISC"
+}
