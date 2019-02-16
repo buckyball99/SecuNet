@@ -36,7 +36,7 @@ app.get("/speak/:animal",function(req,res){
         res.send("The "+ animal + " says " + soundDict[animal] );
     }
     else{
-        res.send("Please match with key value")
+        res.send("Please match with key values- cow,pig,dog,cat,goldfish")
     }
 });
 app.get("/posts", function(req,res){
