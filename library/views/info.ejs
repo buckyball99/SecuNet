@@ -1,0 +1,14 @@
+<h1> Login here!</h1>
+
+<% LoginInfo.forEach(function(Login){  %> 
+
+  <li>New User <%= Login %> is added!</li>     
+
+<%   });                              %>
+
+
+<form action = "/addUser"  method = "POST"> 
+        <input type= "text" name= "newUser" placeholder = "Add name here">    <!-- JS Object example - { newUser : 'LINDA'}-->
+        <button> User database update</button>
+
+</form>
