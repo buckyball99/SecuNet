@@ -1,6 +1,8 @@
 var express= require("express");
 var config = require('./config');
 var bodyParser = require("body-parser");
+const fs = require('fs')
+const path = require('path')
 
 var app = express();
 console.log("OUR EXPRESS APP WILL GO HERE!!");
@@ -22,10 +24,46 @@ var Usernames_Passwords = {
 }
 
 //Get functions here
-app.get("/",function(request,response){     //Req contains all the information about the request that was made that triggered this route                                            // Res contains the information about what we are going to respond with
-    // response.send("Welcome to SecuNet!");
-    response.render("home");
+app.get("/",function(req,res){     //Req contains all the information about the request that was made that triggered this route                                            // Res contains the information about what we are going to respond with
+    res.render("home");
+    // res.sendFile(path.join(__dirname + '/index.htm'))
+
 });
+
+app.get('/video', function(req, res) {
+    const path = 'assets/sample.mp4'
+    const stat = fs.statSync(path)
+    const fileSize = stat.size
+    const range = req.headers.range
+  
+    if (range) {
+      const parts = range.replace(/bytes=/, "").split("-")
+      const start = parseInt(parts[0], 10)
+      const end = parts[1]
+        ? parseInt(parts[1], 10)
+        : fileSize-1
+  
+      const chunksize = (end-start)+1
+      const file = fs.createReadStream(path, {start, end})
+      const head = {
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': 'video/mp4',
+      }
+  
+      res.writeHead(206, head)
+      file.pipe(res)
+    } else {
+      const head = {
+        'Content-Length': fileSize,
+        'Content-Type': 'video/mp4',
+      }
+      res.writeHead(200, head)
+      fs.createReadStream(path).pipe(res)
+    }
+  })
+
 app.get("/fallInLoveWithUsername/:thing",function(req,res){
     thing = req.params.thing;
     res.render("love",{thingVar:thing});
@@ -42,33 +80,6 @@ app.get("/testLogin",function(req,res){
     // res.send("This is the correct login id");
     res.render("info",{LoginInfo:LoginInfo});
 });
-
-app.post("/verifyUser",function(req,res){
-    var checkUsername = req.body.checkUsername;
-    var checkPassword = req.body.checkPassword;
-    if (`${checkUsername}` in Usernames_Passwords){
-            if(Usernames_Passwords[checkUsername] === `${checkPassword}`){
-                res.render("video",{checkUsername:checkUsername,checkPassword:checkPassword});
-            }
-            else{
-                res.redirect("/login");
-            }    
-    }
-    else{
-        res.redirect("/login");
-    }
-
-})
-app.post("/addUser",function(req,res){
-    var newUser = req.body.newUser;
-    var password = req.body.newPassword;
-    LoginInfo.push(newUser);
-    
-    console.log(req.body);
-    // res.send("You have reached the post route");
-    res.redirect('/testLogin');
-
-})
 
 app.get("/speak/:animal",function(req,res){
     var animal = req.params.animal.toLowerCase();
@@ -100,6 +111,35 @@ app.get("*", function(req,res){
     res.send("Wrong input");
 });
 
+
+
+app.post("/verifyUser",function(req,res){
+    var checkUsername = req.body.checkUsername;
+    var checkPassword = req.body.checkPassword;
+    if (`${checkUsername}` in Usernames_Passwords){
+            if(Usernames_Passwords[checkUsername] === `${checkPassword}`){
+                // res.render("video",{checkUsername:checkUsername,checkPassword:checkPassword});
+                res.sendFile(path.join(__dirname + '/index.htm'))
+            }
+            else{
+                res.redirect("/login");
+            }    
+    }
+    else{
+        res.redirect("/login");
+    }
+
+})
+app.post("/addUser",function(req,res){
+    var newUser = req.body.newUser;
+    var password = req.body.newPassword;
+    LoginInfo.push(newUser);
+    
+    console.log(req.body);
+    // res.send("You have reached the post route");
+    res.redirect('/testLogin');
+
+})
 
 
 
