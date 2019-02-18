@@ -13,6 +13,13 @@ app.set("view engine","ejs");
 var LoginInfo = [
     "Tony","Edward","Justin","Rose", "DEEZNUTS"
 ]
+var Usernames_Passwords = {
+    "Prithvi" : "Football",
+    "Vaibhav" : "Barcelona",
+    "Chetan"  : "Sleep",
+    "Manav"   : "Pointer",
+    "Janavi"  : "COE"
+}
 
 //Get functions here
 app.get("/",function(request,response){     //Req contains all the information about the request that was made that triggered this route                                            // Res contains the information about what we are going to respond with
@@ -23,23 +30,43 @@ app.get("/fallInLoveWithUsername/:thing",function(req,res){
     thing = req.params.thing;
     res.render("love",{thingVar:thing});
 });
+
 app.get("/Login",function(req,res){
+res.render("login_home");
+});
+
+app.get("/testLogin",function(req,res){
     // var LoginInfo = [
     //     "Tony","Edward","Justin","Rose", "DEEZNUTS"
     // ]
     // res.send("This is the correct login id");
     res.render("info",{LoginInfo:LoginInfo});
 });
-app.get("/Password",function(req,res){
-    res.send("This is the correct Password");
-});
 
+app.post("/verifyUser",function(req,res){
+    var checkUsername = req.body.checkUsername;
+    var checkPassword = req.body.checkPassword;
+    if (`${checkUsername}` in Usernames_Passwords){
+            if(Usernames_Passwords[checkUsername] === `${checkPassword}`){
+                res.render("video",{checkUsername:checkUsername,checkPassword:checkPassword});
+            }
+            else{
+                res.redirect("/login");
+            }    
+    }
+    else{
+        res.redirect("/login");
+    }
+
+})
 app.post("/addUser",function(req,res){
     var newUser = req.body.newUser;
+    var password = req.body.newPassword;
     LoginInfo.push(newUser);
+    
     console.log(req.body);
     // res.send("You have reached the post route");
-    res.redirect('/Login');
+    res.redirect('/testLogin');
 
 })
 
