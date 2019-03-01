@@ -1,18 +1,31 @@
-<h1> Login here!</h1>
+<% include partials/header %>
+<div class = "container">
+        <header class= "jumbotron">
+                <div class = "container">
+                <h1> Add user!</h1>
+                </div>
+        </header>
+</div>                  
+<div class = "container text-centre">
+        <header>
+        <% Object.keys(Usernames_Passwords).forEach((key) => {  %> 
+        <li>New User <%= key %> is added!</li>     
+        <%   });                              %>
 
-<% LoginInfo.forEach(function(Login){  %> 
+        </header>
 
-  <li>New User <%= Login %> is added!</li>     
+        <form action = "/Login/new"  method = "POST"> 
+                <input type= "text" name= "newUser" placeholder = "Add name of user here">    <!-- JS Object example - { newUser : 'LINDA'}-->
+                <input type= "text" name= "newPassword" placeholder = "Add password here">
+                <button> User database update</button>
+        </form>
 
-<%   });                              %>
+        <a href= "/login"> Back to login page</a>
+</div>
 
-
-<form action = "/addUser"  method = "POST"> 
-        <input type= "text" name= "newUser" placeholder = "Add name of user here">    <!-- JS Object example - { newUser : 'LINDA'}-->
-        <input type= "text" name= "newPassword" placeholder = "Add password here">
-        <button> User database update</button>
-</form>
 
 <!-- <form action = "/addPassword"  method = "POST">
         <input type= "Text" name = "newPassword" placeholder= "Add Password here">
         <button></button> -->
+
+<% include partials/footer %>

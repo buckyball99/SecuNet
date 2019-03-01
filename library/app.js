@@ -8,19 +8,18 @@ var app = express();
 console.log("OUR EXPRESS APP WILL GO HERE!!");
 
 app.use(express.static("public"));
+app.use(express.static("views/imgs"));
 app.use(bodyParser.urlencoded({extended: true}));   // key-value pairs used with {}
 app.set("view engine","ejs");
 
 
-var LoginInfo = [
-    "Tony","Edward","Justin","Rose", "DEEZNUTS"
-]
-var Usernames_Passwords = {
-    "Prithvi" : "Football",
-    "Vaibhav" : "Barcelona",
-    "Chetan"  : "Sleep",
-    "Manav"   : "Pointer",
-    "Janavi"  : "COE"
+
+var Usernames_Passwords = {       //This is a proper dictionary, not the structured one,i.e dict[{key:value}]
+    "Prithvi" : "football",
+    "Vaibhav" : "barcelona",
+    "Chetan"  : "sleep",
+    "Manav"   : "pointer",
+    "Janavi"  : "coe"
 }
 
 //Get functions here
@@ -69,16 +68,17 @@ app.get("/fallInLoveWithUsername/:thing",function(req,res){
     res.render("love",{thingVar:thing});
 });
 
-app.get("/Login",function(req,res){
-res.render("login_home");
+app.get("/login",function(req,res){
+// res.render("login_home");
+    res.render("FinalLogin.ejs");
 });
 
-app.get("/testLogin",function(req,res){
+app.get("/Login/new",function(req,res){
     // var LoginInfo = [
     //     "Tony","Edward","Justin","Rose", "DEEZNUTS"
     // ]
     // res.send("This is the correct login id");
-    res.render("info",{LoginInfo:LoginInfo});
+    res.render("info",{Usernames_Passwords:Usernames_Passwords});
 });
 
 app.get("/speak/:animal",function(req,res){
@@ -113,7 +113,7 @@ app.get("*", function(req,res){
 
 
 
-app.post("/verifyUser",function(req,res){
+app.post("/login",function(req,res){                        // same route to follow REST
     var checkUsername = req.body.checkUsername;
     var checkPassword = req.body.checkPassword;
     if (`${checkUsername}` in Usernames_Passwords){
@@ -130,16 +130,15 @@ app.post("/verifyUser",function(req,res){
     }
 
 })
-app.post("/addUser",function(req,res){
-    var newUser = req.body.newUser;
+app.post("/Login/new",function(req,res){
+    var user = req.body.newUser;
     var password = req.body.newPassword;
-    LoginInfo.push(newUser);
-    
+    Usernames_Passwords[`${user}`]= `${password}`;
     console.log(req.body);
     // res.send("You have reached the post route");
-    res.redirect('/testLogin');
+    res.redirect('/Login/new');
 
-})
+}) 
 
 
 

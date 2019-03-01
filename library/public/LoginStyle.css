@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+body {
+    font-family:"Roboto",sans-serif;
+    background: url(mountain.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.main-section {
+    margin: 0 auto;     /* Centre align */
+    margin-top: 130px;  /* shift by 130 px below*/
+    padding:0;      /* Widen it a bit  */
+}
+.modal-content{
+    background-color: #3b4652;
+    opacity:0.95;
+    padding: 0 18px;
+    box-shadow: 0px 0px 3px #848484; 
+}
+.user-img {
+    margin-top: -50px;
+    margin-bottom: 35 px;
+}
+.user-img img{
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px #848484; 
+}
+.form-group {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.form-group input{
+    height: 42px;
+    border-radius: 10px;
+    border:0;
+    font-size: 18px;
+    padding-left: 54px;
+}
+
+.form-group::before {
+    font-family: 'Font Awesome\ 5 Free';
+    content:"\f21b";
+    position:absolute;
+    font-size: 22px;
+    color: #e20943;
+    left: 28px;
+    padding-top : 4px;
+}
+
+.form-group:last-of-type::before{
+    content:"\f023";
+}
+
+button{
+    width: 40%;
+    margin:5px 0 25px;
+}
+.btn{
+    background-color: #27c2a5;
+    color:#fff;
+    font-size: 19px;
+    padding:7px 14px;
+    border-radius:5px;
+    border-bottom: 4px solid #219882;
+}
+.btn:hover,.btn:focus{
+    background-color: #25a890!important;
+    border-bottom:4px solid #25a890
+}
+.svg-inline--fa {
+    font-size:20px;
+    margin-right:7px;
+}
+.forgot {
+    padding:5px 0 25px;
+}
+.forgot a {
+    color:#c2fbfe
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
